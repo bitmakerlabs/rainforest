@@ -1,27 +1,16 @@
 <h1>Listing products</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Price in cents</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @products.each do |product| %>
-  <tr>
-    <td><%= product.name %></td>
-    <td><%= product.description %></td>
-    <td><%= product.formatted_price %></td>
-    <td><%= link_to 'Show', product %></td>
-    <td><%= link_to 'Edit', edit_product_path(product) %></td>
-    <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
 <%= link_to 'New Product', new_product_path %>
+
+<div id="products">
+  <% @products.each do |product| %>
+    <%= link_to product_path(product.id) do %>
+      <h2>
+        <%= number_to_currency(product.formatted_price) %>
+        <%= product.name %>
+      </h2>
+    <% end %>
+    <!-- keeps the description to 100 characters or less -->
+    <p><%= truncate(product.description, length: 100) %></p>
+  <% end %>
+</div>
